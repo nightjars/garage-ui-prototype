@@ -1,0 +1,79 @@
+<div class="container">
+  <div class="row">
+    <div class="col-3">
+      <br/>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item container-fluid">
+          <hr>
+          <div class="col">Garage:</div>
+          <div class="dropdown col">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {{selectedGarage.garageName}}
+            </button>
+            <div class="dropdown-menu col" aria-labelledby="dropdownMenuButton">
+              <div *ngFor="let garage of garages" (click)="selectGarage(garage.garageName)">{{garage.garageName}}</div>
+            </div>
+          </div>
+        </li>
+        <br>
+        <hr>
+        <div class="btn-group-vertical" data-toggle="buttons">
+          <li class="nav-item container">
+          <label class="btn btn-primary active text-left">
+            <input type="radio" name="options" id="option1" autocomplete="off" checked> Not Checked In
+          </label>
+          </li>
+          <li class="nav-item container">
+          <label class="btn btn-primary text-left">
+            <input type="radio" name="options" id="option2" autocomplete="off"> Currently In Garage
+          </label>
+          </li>
+          <li class="nav-item container">
+          <label class="btn btn-primary text-left">
+            <input type="radio" name="options" id="option3" autocomplete="off"> All
+          </label>
+          </li>
+          </div>
+      </ul>
+    </div>
+
+    <main class="col-8">
+      <br>
+      <h1>Parking Garage Real-Time Status</h1>
+      <br>
+      <section class="row text-center placeholders">
+        <div class="col">
+          <h4>Stalls Occupied</h4>
+          <span>{{selectedGarage.vehicles.length}}</span>
+        </div>
+        <div class="col">
+          <h4>Stalls Available</h4>
+          <span>{{selectedGarage.totalStalls - selectedGarage.vehicles.length}}</span>
+        </div>
+      </section>
+
+      <br/>
+
+      <div class="table">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>License Plate</th>
+            <th>Time In</th>
+            <th>Time Out</th>
+            <th>Checked In</th>
+          </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let vehicle of selectedGarage.vehicles">
+              <td>{{vehicle.plate}}</td>
+              <td>{{vehicle.time_in | date: 'hh:mm MM/dd/yy'}}</td>
+              <td>{{vehicle.time_out}}</td>
+              <td>{{vehicle.checked_in}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
