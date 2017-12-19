@@ -1,0 +1,41 @@
+<div *ngIf="!loading" class="container">
+  <div class="row">
+    <div class="col-9">
+      <h2>
+        Vehicle Information For {{vehicle.plate}}
+      </h2>
+    </div>
+  </div>
+  <div *ngFor="let seenTime of vehicle.event_list.reverse(); let i=index">
+    <div *ngIf="displayImage.indexOf(i) > -1; else not_first">
+      <div class="row">
+        <div class="col-9">
+          <img src="http://192.168.1.99:5000/image/{{seenTime.image}}" id="plate-img">
+        </div>
+        <div class="col-3">
+          <h5>Time of image: </h5>
+          <h6>{{seenTime.date_time | date: 'hh:mm MM/dd/yy'}}</h6>
+        </div>
+      </div>
+      <br>
+      <div *ngIf="vehicle.event_list.length > 1 && i == 0">
+        Other time this plate has been seen:
+      </div>
+    </div>
+    <ng-template #not_first>
+      <div class="row">
+        <div class="col-2">
+          <button type="button" class="btn btn-primary" (click)="addToDisplayList(i)">
+            <i class="fa fa-camera" aria-hidden="true"></i>
+          </button>
+        </div>
+        <div class="col-9">
+          <h6>{{seenTime.date_time | date: 'hh:mm MM/dd/yy'}}</h6>
+        </div>
+      </div>
+    </ng-template>
+    <br>
+  </div>
+</div>
+
+

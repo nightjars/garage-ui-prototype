@@ -1,0 +1,49 @@
+<br>
+<div class="container">
+<div class="row">
+  <div class="col-2">
+    <ul class="nav flex-column nav-pills">
+      <li class="nav-item">
+        <div *ngIf="changePasswordSelected == true">
+          <div class="nav-link active">Change Password</div>
+        </div>
+        <div *ngIf="changePasswordSelected == false">
+          <a class="nav-link" (click)="onTabSelect('changePassword')">Change Password</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div *ngIf="userSettingsSelected == true">
+          <div class="nav-link active">User Maintenance</div>
+        </div>
+        <div *ngIf="userSettingsSelected == false">
+          <a class="nav-link" (click)="onTabSelect('userSettings')">User Maintenance</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <div *ngIf="systemSettingsSelected == true">
+          <div class="nav-link active">System Setup</div>
+        </div>
+        <div *ngIf="systemSettingsSelected == false">
+          <a class="nav-link" (click)="onTabSelect('systemSettings')">System Setup</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link disabled">Disabled</a>
+      </li>
+    </ul>
+  </div>
+  <div class="col-sm1">
+  </div>
+  <div class="col">
+    <div *ngIf="changePasswordSelected == true">
+      <app-settings-password-change></app-settings-password-change>
+    </div>
+    <div *ngIf="userSettingsSelected == true">
+      <app-settings-users></app-settings-users>
+    </div>
+    <div *ngIf="systemSettingsSelected == true">
+      Placeholder
+    </div>
+  </div>
+</div>
+</div>

@@ -4,7 +4,9 @@ import { RouterModule} from '@angular/router';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
-import { LoginComponent } from './login.component';
+import { SettingsComponent } from './settings.component';
+import { PasswordChangeComponent } from './password-change.component';
+import { UsersComponent } from './users.component';
 
 @NgModule({
   imports: [
@@ -14,9 +16,11 @@ import { LoginComponent } from './login.component';
     RouterModule
   ],
   declarations: [
-    LoginComponent
+    SettingsComponent,
+    PasswordChangeComponent,
+    UsersComponent
   ],
   exports: [],
   providers: []
 })
-export class LoginModule {}
+export class SettingsModule {}

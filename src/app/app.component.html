@@ -1,15 +1,17 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">Parking Garage</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="navbar-brand">Real-time Parking Garage</div>
   <div class="collapse navbar-collapse" id="navbarNav">
     <div class="navbar-nav">
       <a class="nav-item nav-link" routerLink="GarageView">Garage View</a>
-      <a class="nav-item nav-link" routerLink="VehicleDetails">Vehicle Details</a>
-      <a class="nav-item nav-link" routerLink="">Settings</a>
-      <a class="nav-item nav-link" routerLink="Login">Login</a>
+      <a class="nav-item nav-link" routerLink="Settings">Settings</a>
+      <a class="nav-item nav-link" routerLink="Login">
+        <div *ngIf="authService.isLoggedIn()">Logout</div>
+        <div *ngIf="!authService.isLoggedIn()">Login</div>
+      </a>
     </div>
   </div>
 </nav>

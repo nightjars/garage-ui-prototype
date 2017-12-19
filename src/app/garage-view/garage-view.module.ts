@@ -4,6 +4,8 @@ import { RouterModule} from '@angular/router';
 import { HttpModule } from '@angular/http';
 
 import { GarageNavComponent } from './garage-nav.component';
+import { GarageNavFilterPipe } from './garage-nav-filter.pipe';
+import {VehicleDetailsComponent} from "./vehicle-details.component";
 
 @NgModule({
   imports: [
@@ -12,7 +14,9 @@ import { GarageNavComponent } from './garage-nav.component';
     RouterModule
   ],
   declarations: [
-    GarageNavComponent
+    GarageNavComponent,
+    VehicleDetailsComponent,
+    GarageNavFilterPipe
   ],
   exports: [],
   providers: []
