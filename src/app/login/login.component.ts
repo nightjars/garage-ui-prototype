@@ -42,6 +42,7 @@ export class LoginComponent {
         if (!resp) {
           this.message = "Bad username or password, try again.";
         } else {
+          this.auth.setAccess();
           this.router.navigate(['']);
         }
       });

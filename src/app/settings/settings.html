@@ -12,23 +12,20 @@
         </div>
       </li>
       <li class="nav-item">
-        <div *ngIf="userSettingsSelected == true">
-          <div class="nav-link active">User Maintenance</div>
+        <div *ngIf="newUserCreateSelected == true">
+          <div class="nav-link active">Create New User</div>
         </div>
-        <div *ngIf="userSettingsSelected == false">
-          <a class="nav-link" (click)="onTabSelect('userSettings')">User Maintenance</a>
+        <div *ngIf="newUserCreateSelected == false">
+          <a class="nav-link" (click)="onTabSelect('newUser')">Create New User</a>
         </div>
       </li>
       <li class="nav-item">
         <div *ngIf="systemSettingsSelected == true">
-          <div class="nav-link active">System Setup</div>
+          <div class="nav-link active">Edit User</div>
         </div>
         <div *ngIf="systemSettingsSelected == false">
-          <a class="nav-link" (click)="onTabSelect('systemSettings')">System Setup</a>
+          <a class="nav-link" (click)="onTabSelect('systemSettings')">Edit User</a>
         </div>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link disabled">Disabled</a>
       </li>
     </ul>
   </div>
@@ -38,8 +35,8 @@
     <div *ngIf="changePasswordSelected == true">
       <app-settings-password-change></app-settings-password-change>
     </div>
-    <div *ngIf="userSettingsSelected == true">
-      <app-settings-users></app-settings-users>
+    <div *ngIf="newUserCreateSelected == true">
+      <app-settings-new-user></app-settings-new-user>
     </div>
     <div *ngIf="systemSettingsSelected == true">
       Placeholder

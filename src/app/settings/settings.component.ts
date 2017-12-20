@@ -10,20 +10,20 @@ import { PasswordChange } from '../models/PasswordChange';
 })
 export class SettingsComponent {
   changePasswordSelected = true;
-  userSettingsSelected = false;
+  newUserCreateSelected = false;
   systemSettingsSelected = false;
   constructor(private auth: AuthService, private router: Router) {
   }
   onTabSelect(selection): void {
     this.changePasswordSelected = false;
-    this.userSettingsSelected = false;
+    this.newUserCreateSelected = false;
     this.systemSettingsSelected = false;
     switch (selection) {
       case 'changePassword':
         this.changePasswordSelected = true;
         break;
-      case 'userSettings':
-        this.userSettingsSelected = true;
+      case 'newUser':
+        this.newUserCreateSelected = true;
         break;
       case 'systemSettings':
         this.systemSettingsSelected = true;

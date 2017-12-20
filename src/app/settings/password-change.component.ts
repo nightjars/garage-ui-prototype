@@ -11,7 +11,7 @@ import { HttpService } from '../HttpService'
   templateUrl: 'password-change.html'
 })
 export class PasswordChangeComponent {
-  private CHANGE_URL: string = 'http://192.168.1.99:5000/api/change_password';
+  private CHANGE_URL: string = 'http://192.168.1.99:5000/api/user/change_password';
   newPasswordForm: PasswordChange = new PasswordChange();
   passwordChangeMessage: string = '';
   changeDone: boolean = false;

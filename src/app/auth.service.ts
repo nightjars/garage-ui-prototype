@@ -9,6 +9,7 @@ import 'rxjs/add/observable/of';
 export class AuthService {
   public token: string;
   private BASE_URL: string = 'http://192.168.1.99:5000/auth';
+  private permissions_url: string = 'http://192.168.1.99:5000/api/user/user_permissions';
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   constructor(private http: Http) {
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -46,6 +47,33 @@ export class AuthService {
       return JSON.parse(localStorage.getItem('currentUser'))['token'];
     } else {
       return '';
+    }
+  }
+  getWriteAccess(): boolean {
+    if (this.isLoggedIn()) {
+      return JSON.parse(localStorage.getItem('currentUser')['writeAccess']);
+    }
+    return false;
+  }
+  getAdminAccess(): boolean {
+    if (this.isLoggedIn()) {
+      return JSON.parse(localStorage.getItem('currentUser')['adminAccess']);
+    }
+    return false;
+  }
+  setAccess(): void {
+    if (this.isLoggedIn()) {
+      let headers = new Headers();
+      headers.append('Authorization', 'JWT ' + this.getToken());
+      this.http.get(this.permissions_url, {headers: headers})
+        .map(res => res.json())
+        .subscribe( response => {
+          let user = JSON.parse(localStorage.getItem('currentUser'));
+          user['writeAccess'] = response['writeAccess'];
+          user['adminAccess'] = response['adminAccess'];
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          console.log(user);
+        });
     }
   }
 }

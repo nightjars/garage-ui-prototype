@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 
 import { SettingsComponent } from './settings.component';
 import { PasswordChangeComponent } from './password-change.component';
-import { UsersComponent } from './users.component';
+import { NewUserComponent } from './new-user.component';
 
 @NgModule({
   imports: [
@@ -18,7 +18,7 @@ import { UsersComponent } from './users.component';
   declarations: [
     SettingsComponent,
     PasswordChangeComponent,
-    UsersComponent
+    NewUserComponent
   ],
   exports: [],
   providers: []
