@@ -19,7 +19,7 @@ export class GarageNavComponent implements OnInit, OnDestroy {
   loading = true;
   auto_poll = new Subscription();
 
-  constructor(garageService: GarageService, private auth: AuthService, private router: Router) {
+  constructor(garageService: GarageService, public auth: AuthService, private router: Router) {
     this.garageService = garageService;
     this.details = null;
     this.fetchData();

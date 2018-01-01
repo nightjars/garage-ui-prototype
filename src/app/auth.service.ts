@@ -17,7 +17,8 @@ export class AuthService {
   }
   login(user): Observable<boolean> {
     let url: string = `${this.BASE_URL}`;
-    return this.http.post(url, user, {headers: this.headers})
+    let cred_user = {'username': user.username, 'password': user.password}
+    return this.http.post(url, cred_user, {headers: this.headers})
       .map((response: Response) => {
          console.log(response);
         let token = response.json() && response.json().access_token;
@@ -51,13 +52,13 @@ export class AuthService {
   }
   getWriteAccess(): boolean {
     if (this.isLoggedIn()) {
-      return JSON.parse(localStorage.getItem('currentUser')['writeAccess']);
+      return JSON.parse(localStorage.getItem('currentUser'))['writeAccess'];
     }
     return false;
   }
   getAdminAccess(): boolean {
     if (this.isLoggedIn()) {
-      return JSON.parse(localStorage.getItem('currentUser')['adminAccess']);
+      return JSON.parse(localStorage.getItem('currentUser'))['adminAccess'];
     }
     return false;
   }

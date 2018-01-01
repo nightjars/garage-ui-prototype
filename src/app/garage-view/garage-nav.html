@@ -13,7 +13,7 @@
                 <th>Image</th>
                 <th>Plate</th>
                 <th>Time Read</th>
-                <th>Remove</th>
+                <th *ngIf="auth.getWriteAccess()">Remove</th>
               </tr>
               </thead>
               <tbody>
@@ -25,7 +25,7 @@
                   </td>
                   <td>{{vehicle.plate}}</td>
                   <td>{{vehicle.date_time | date: 'hh:mm MM/dd/yy'}}</td>
-                  <td>
+                  <td *ngIf="auth.getWriteAccess()">
                       <button type="button" class="btn btn-primary" (click)="deleteVehicle(vehicle)">
                         <i class="fa fa-times" aria-hidden="true"></i>
                       </button>

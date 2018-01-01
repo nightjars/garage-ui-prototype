@@ -6,7 +6,9 @@ export class User {
   public constructor(username?: string, password?: string, writeAccess?: boolean, adminAccess?: boolean) {
     this.username = username;
     this.password = password;
-    this.writeAccess = writeAccess;
-    this.adminAccess = adminAccess;
+    this.writeAccess = writeAccess ? true : false;
+    this.adminAccess = adminAccess ? true : false;
+    console.log(this.username);
+    console.log(this.password);
   }
 }

@@ -4,15 +4,14 @@
     <form (ngSubmit)="onUserCreate()" novalidate class="form-signin">
       <h4> Create New User</h4>
       <input type="text" class="form-control" [(ngModel)]="newUser.username"
-             name="Current Password" placeholder="Username" required="" autofocus="" />
+             name="Username" placeholder="Username" required="" autofocus="" />
       <br>
       <input type="password" class="form-control" [(ngModel)]="newUser.password"
-             name="New Password" placeholder="Password" required="" />
+             name="Password" placeholder="Password" required="" />
       <br>
       <div class="row">
         <div class="col-sm-2">
-          <input type="checkbox" class="form-control" [(ngModel)]="newUser.writeAccess"
-                 name="Confirm New Password" placeholder="Confirm New Password" required="" />
+          <input type="checkbox" [(ngModel)]="newUser.writeAccess" name="WriteAccess"/>
         </div>
         <div class="col">
           Allow user write access (remove vehicle from list)
@@ -20,8 +19,7 @@
       </div>
       <div class="row">
         <div class="col-sm-2">
-          <input type="checkbox" class="form-control" [(ngModel)]="newUser.adminAccess"
-                 name="Confirm New Password" placeholder="Confirm New Password" required="" />
+          <input type="checkbox" [(ngModel)]="newUser.adminAccess" name="AdminAccess"/>
         </div>
         <div class="col">
           Allow user admin access (create/modify user accounts)
@@ -32,7 +30,7 @@
     </form>
   </div>
   <div *ngIf="userCreateDone==true">
-    <h5>Password change successful.</h5>
+    <h5>User Creation Successful.</h5>
     <br>
     <a routerLink="/Settings"><button class="btn btn-primary">Done</button></a>
   </div>

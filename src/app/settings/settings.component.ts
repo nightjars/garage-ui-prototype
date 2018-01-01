@@ -12,7 +12,7 @@ export class SettingsComponent {
   changePasswordSelected = true;
   newUserCreateSelected = false;
   systemSettingsSelected = false;
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(public auth: AuthService, private router: Router) {
   }
   onTabSelect(selection): void {
     this.changePasswordSelected = false;
