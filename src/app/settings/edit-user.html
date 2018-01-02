@@ -1,0 +1,68 @@
+<div *ngIf="userList != null">
+  <div *ngIf="selectedUser == null">
+    <div class="table">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Username</th>
+          <th>Modify Access</th>
+          <th>Admin Access</th>
+          <th>Edit User</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let user of userList">
+          <td>{{user.username}}</td>
+          <td>{{user.writeAccess}}</td>
+          <td>{{user.adminAccess}}</td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="editUser(user)">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="selectedUser != null" class="col-sm-6">
+    <form (ngSubmit)="onUserEdit()" novalidate class="form-signin">
+      <h4>Edit User</h4>
+      <input type="text" class="form-control" [(ngModel)]="selectedUser.username"
+             name="Username" placeholder="Username" required="" autofocus="" readonly/>
+      <br>
+      <input type="password" class="form-control" [(ngModel)]="selectedUser.password"
+             name="Password" placeholder="Password" required="" />
+      <br>
+      <div class="row">
+        <div class="col-sm-2">
+          <input type="checkbox" [(ngModel)]="selectedUser.writeAccess" name="WriteAccess"/>
+        </div>
+        <div class="col">
+          Allow user write access (remove vehicle from list)
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <input type="checkbox" [(ngModel)]="selectedUser.adminAccess" name="AdminAccess"/>
+        </div>
+        <div class="col">
+          Allow user admin access (create/modify user accounts)
+        </div>
+      </div>
+      <br>
+      <button class="btn btn-primary btn-block"  name="Submit" value="Edit User" type="Submit">Save Changes</button>
+    </form>
+    <br/>
+    <br/>
+    <div class="row">
+      <div class="col-sm-5">
+        <button (click)="onCancel()" class="btn btn-primary btn-block">Cancel</button>
+      </div>
+      <div class="col-sm-2"></div>
+      <div class="col-sm-5">
+        <button (click)="onDelete()" class="btn btn-primary btn-block">Delete User</button>
+      </div>
+    </div>
+  </div>
+</div>

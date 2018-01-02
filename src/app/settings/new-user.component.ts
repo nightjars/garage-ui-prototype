@@ -21,8 +21,15 @@ export class NewUserComponent {
     this.http.post(this.URL, this.newUser)
       .map(res => res.json())
       .subscribe(response => {
+        if (response.ok == true) {
+          this.userCreateDone = true;
+        } else {
+          this.newUserMessage = 'Error creating user.  Better error messages to come.';
+          this.userCreateDone = false;
+        }
         console.log('user creation request sent');
         console.log(this.newUser);
+        console.log(response);
       });
   }
 }

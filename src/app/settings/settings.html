@@ -20,10 +20,10 @@
         </div>
       </li>
       <li class="nav-item">
-        <div *ngIf="auth.getAdminAccess() && systemSettingsSelected == true">
+        <div *ngIf="auth.getAdminAccess() && editUserSelected == true">
           <div class="nav-link active">Edit User</div>
         </div>
-        <div *ngIf="auth.getAdminAccess() && systemSettingsSelected == false">
+        <div *ngIf="auth.getAdminAccess() && editUserSelected == false">
           <a class="nav-link" (click)="onTabSelect('systemSettings')">Edit User</a>
         </div>
       </li>
@@ -38,8 +38,8 @@
     <div *ngIf="auth.getAdminAccess() && newUserCreateSelected == true">
       <app-settings-new-user></app-settings-new-user>
     </div>
-    <div *ngIf="auth.getAdminAccess() && systemSettingsSelected == true">
-      Placeholder
+    <div *ngIf="auth.getAdminAccess() && editUserSelected == true">
+      <app-settings-edit-user></app-settings-edit-user>
     </div>
   </div>
 </div>

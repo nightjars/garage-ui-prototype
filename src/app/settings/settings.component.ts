@@ -11,13 +11,13 @@ import { PasswordChange } from '../models/PasswordChange';
 export class SettingsComponent {
   changePasswordSelected = true;
   newUserCreateSelected = false;
-  systemSettingsSelected = false;
+  editUserSelected = false;
   constructor(public auth: AuthService, private router: Router) {
   }
   onTabSelect(selection): void {
     this.changePasswordSelected = false;
     this.newUserCreateSelected = false;
-    this.systemSettingsSelected = false;
+    this.editUserSelected = false;
     switch (selection) {
       case 'changePassword':
         this.changePasswordSelected = true;
@@ -26,7 +26,7 @@ export class SettingsComponent {
         this.newUserCreateSelected = true;
         break;
       case 'systemSettings':
-        this.systemSettingsSelected = true;
+        this.editUserSelected = true;
         break;
       default:
         alert('something went wrong');
