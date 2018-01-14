@@ -12,7 +12,7 @@ import { HttpService } from '../HttpService';
 export class EditUserComponent implements OnInit {
   private getURL: string = 'http://192.168.1.99:5000/api/user/users';
   private postURL: string = 'http://192.168.1.99:5000/api/user/modify_user';
-  private deleteURL: string = 'http://192.168.1.99:5000/api/user/delete_user';
+  private deleteURL: string = 'http://192.168.1.99.99:5000/api/user/delete_user';
   newUserMessage: string;
   userList: null;
   newUser: User = new User();
