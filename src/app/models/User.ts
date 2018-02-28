@@ -8,7 +8,5 @@ export class User {
     this.password = password;
     this.writeAccess = writeAccess ? true : false;
     this.adminAccess = adminAccess ? true : false;
-    console.log(this.username);
-    console.log(this.password);
   }
 }

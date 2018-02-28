@@ -1,0 +1,25 @@
+<app-vehicle-alert-create (onAlertCreated)="this.ngOnInit()" [plate]="plate"></app-vehicle-alert-create>
+<div *ngIf="alertList != null && alertList.length > 0">
+    <div class="table">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Plate</th>
+          <th>Email</th>
+          <th *ngIf="auth.getWriteAccess()">Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let alert of alertList">
+          <td>{{alert.plate}}</td>
+          <td>{{alert.email}}</td>
+          <td *ngIf="auth.getWriteAccess()">
+            <button type="button" class="btn btn-primary" (click)="deleteAlert(alert)">
+              <i class="fa fa-times" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+</div>

@@ -3,14 +3,11 @@ import { CommonModule} from '@angular/common';
 import { RouterModule} from '@angular/router';
 import { HttpModule } from '@angular/http';
 
-import { GarageNavComponent } from './garage-nav.component';
-import { GarageNavFilterPipe } from './garage-nav-filter.pipe';
-import {VehicleDetailsComponent} from "./vehicle-details.component";
-import {GarageSearchComponent} from "./garage-search.component";
 import { FormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'angular4-datepicker/src/my-date-picker/my-date-picker.module';
 import {IMyDpOptions, IMyDateModel} from 'angular4-datepicker/src/my-date-picker/interfaces';
-import {VehicleAlertsModule} from "../alerts/vehicle-alerts.module";
+import { VehicleAlertListComponent } from "./vehicle-alert-list.component";
+import {VehicleAlertCreateComponent} from "./vehicle-alert-create.component";
 
 @NgModule({
   imports: [
@@ -18,16 +15,13 @@ import {VehicleAlertsModule} from "../alerts/vehicle-alerts.module";
     HttpModule,
     RouterModule,
     FormsModule,
-    MyDatePickerModule,
-    VehicleAlertsModule
+    MyDatePickerModule
   ],
   declarations: [
-    GarageNavComponent,
-    VehicleDetailsComponent,
-    GarageNavFilterPipe,
-    GarageSearchComponent
+    VehicleAlertListComponent,
+    VehicleAlertCreateComponent,
   ],
-  exports: [],
+  exports: [VehicleAlertListComponent],
   providers: []
 })
-export class GarageViewModule {}
+export class VehicleAlertsModule {}

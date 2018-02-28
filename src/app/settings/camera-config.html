@@ -1,0 +1,158 @@
+<div *ngIf="cameraList != null">
+  <div *ngIf="selectedCamera == null">
+    <div class="table">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th class="row-live-img">Live Image</th>
+          <th class="row-cam-name">Camera Data</th>
+          <th>Edit Camera</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let camera of cameraList">
+          <td>
+            <div *ngIf="camera.run_status!=null">
+              <a target="_blank" href="http://192.168.1.99:5000/api/camera/get/image/{{camera.id}}">
+                <app-live-camera [camera_id]="camera.id"></app-live-camera>
+              </a>
+            </div>
+            <div *ngIf="camera.run_status==null">
+              Camera Offline
+            </div>
+          </td>
+          <td>
+            <div class="row">Name: {{camera.camera_id}}</div>
+            <div class="row" *ngIf="camera.running">Camera Currently Running</div>
+            <div class="row" *ngIf="!camera.running">Camera Not Currently Running</div>
+            <div class="row" *ngIf="camera.run_status!=null">
+              Last Data:
+              {{camera.run_status.last_monitor_time | date: 'h:mm:ss a MM/dd/yy'}}
+            </div>
+            <div class="row" *ngIf="camera.run_status==null">
+              No Recent Data Received
+            </div>
+          </td>
+          <td>
+            <button type="button" class="btn btn-primary" (click)="editCamera(camera)">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <button type="button" class="btn btn-primary" (click)="editCamera(null, newCam=true)">
+            <i class="fa fa-plus-square" aria-hidden="true"></i>
+          </button>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div *ngIf="selectedCamera != null" class="col-sm-6">
+    <button (click)="onDetectionAreaConfig()">Setup Camera Detection Area</button>
+    <a target="_blank" href="http://192.168.1.99:5000/api/camera/get/motion_image/{{selectedCamera.id}}">
+      <button>View Current Detection Area</button>
+    </a>
+    <div *ngIf="detectionAreaConfig">
+      <app-camera-detection-area-config [camera]="selectedCamera" (onCloseSettings)="detectionAreaConfig=false"></app-camera-detection-area-config>
+    </div>
+    <div *ngIf="!detectionAreaConfig">
+      <form (ngSubmit)="onCameraEdit()" novalidate class="form-signin">
+        <h4>Edit Camera</h4>
+        <br/>
+        <label for="camera_id">Camera Name:</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.camera_id"
+               name="camera_id" id="camera_id" placeholder=""
+               required="" autofocus="" />
+
+        <label for="runtime_directory">OpenALPR Runtime Directory:</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.runtime_directory"
+               name="runtime_directory" id="runtime_directory"
+               placeholder="Runtime Directory" required="" readonly />
+
+        <label for="country_code">OpenALPR Country Code</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.country_code"
+               name="country_code" id="country_code"
+               placeholder="" required="" />
+        <label for="default_region">OpenALPR Default Region</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.default_region"
+               name="default_region" id="default_region"
+               placeholder="" required="" />
+        <label for="config_file_name">OpenALPR Configuration Filename</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.config_file_name"
+               name="config_file_name" id="config_file_name"
+               placeholder="" required="" />
+        <label for="camera_url">Camera URL</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.camera_url"
+               name="camera_url" id="camera_url"
+               placeholder="" required="" />
+        <label for="motion_threshold">Amount of Change in Frame (decimal, .01 = 1%) for Motion Detection</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.motion_threshold"
+               name="motion_threshold" id="motion_threshold"
+               placeholder="" required="" />
+        <label for="prewarp">OpenALPR Prewarm (from Prewarp Calibration Tool)</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.prewarp"
+               name="prewarp" id="prewarp"
+               placeholder="" required="" />
+        <label for="no_motion_sleep_time">Milliseconds to Sleep Between Motionless Frames</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.no_motion_sleep_time"
+               name="no_motion_sleep_time" id="no_motion_sleep_time"
+               placeholder="" required="" />
+        <label for="confidence_threshold">Confidence Threshold to Report Plate (in Percent) </label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.confidence_threshold"
+               name="confidence_threshold" id="confidence_threshold"
+               placeholder="" required="" />
+        <label for="max_plate_angle_degrees">OpenALPR Max Plate Angle (Degrees)</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.max_plate_angle_degrees"
+               name="max_plate_angle_degrees" id="max_plate_angle_degrees"
+               placeholder="" required="" />
+        <label for="contrast_detection_threshold">OpenALPR Contrast Detection Threshold</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.contrast_detection_threshold"
+               name="contrast_detection_threshold" id="contrast_detection_threshold"
+               placeholder="" required="" />
+        <label for="analysis_count">OpenALPR Analysis Count</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.analysis_count"
+               name="analysis_count" id="analysis_count"
+               placeholder="" required="" />
+        <label for="max_detection_input_height">OpenALPR Input Height</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.max_detection_input_height"
+               name="max_detection_input_height" id="max_detection_input_height"
+               placeholder="" required="" />
+        <label for="max_detection_input_width">OpenALPR Input Width</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.max_detection_input_width"
+               name="max_detection_input_width" id="max_detection_input_width"
+               placeholder="" required="" />
+        <label for="detection_strictness">OpenALPR Detection Strictness</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.detection_strictness"
+               name="detection_strictness" id="detection_strictness"
+               placeholder="" required="" />
+        <label for="detection_iteration_increase">OpenALPR Detection Iteration Increase</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.detection_iteration_increase"
+               name="detection_iteration_increase" id="detection_iteration_increase"
+               placeholder="" required="" />
+        <label for="max_plate_height_percent">OpenALPR Max Plate Height (Percent)</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.max_plate_height_percent"
+               name="max_plate_height_percent" id="max_plate_height_percent"
+               placeholder="" required="" />
+        <label for="max_plate_width_percent">OpenALPR Max Plate Width (Percent)</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.max_plate_width_percent"
+               name="max_plate_width_percent" id="max_plate_width_percent"
+               placeholder="" required="" />
+        <label for="detection_mode_count">Detection Mode Count</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.detection_mode_count"
+               name="detection_mode_count" id="detection_mode_count"
+               placeholder="" required="" />
+        <label for="motion_mode_count">Motion Mode Count</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.motion_mode_count"
+               name="motion_mode_count" id="motion_mode_count"
+               placeholder="" required="" />
+        <label for="update_status_interval">Status Update Interval</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedCamera.update_status_interval"
+               name="update_status_interval" id="update_status_interval"
+               placeholder="" required="" />
+        <br />
+        <button class="btn btn-primary btn-block"  name="Submit" value="Save Camera" type="Submit">Save</button>
+      </form>
+    </div>
+  </div>
+</div>

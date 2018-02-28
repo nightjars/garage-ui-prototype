@@ -6,36 +6,112 @@
       </h2>
     </div>
   </div>
-  <div *ngFor="let seenTime of vehicle.event_list.reverse(); let i=index">
-    <div *ngIf="displayImage.indexOf(i) > -1; else not_first">
       <div class="row">
         <div class="col-9">
-          <img src="http://192.168.1.99:5000/image/{{seenTime.image}}" id="plate-img">
+          <a target="_blank" href="http://192.168.1.99:5000/image/{{vehicle.event_list[0].image}}">
+            <img src="http://192.168.1.99:5000/image/{{vehicle.event_list[0].image}}" id="plate-img">
+          </a>
         </div>
         <div class="col-3">
           <h5>Time of image: </h5>
-          <h6>{{seenTime.date_time | date: 'hh:mm MM/dd/yy'}}</h6>
+          <h6>{{vehicle.event_list[0].date_time | date: 'hh:mm a MM/dd/yy'}}</h6>
         </div>
       </div>
-      <br>
-      <div *ngIf="vehicle.event_list.length > 1 && i == 0">
-        Other time this plate has been seen:
+      <br/>
+      <div id="accordion">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                <div *ngIf="vehicle.alerts">
+                  Vehicle Alerts (One or More Currently Set)
+                </div>
+                <div *ngIf="!vehicle.alerts">
+                  Vehicle Alerts (None Currently Set)
+                </div>
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+            <div class="card-body">
+              <app-vehicle-alert-list [plate]="vehicle.plate"></app-vehicle-alert-list>
+            </div>
+          </div>
+        </div>
+        <br>
+
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h5 class="mb-0">
+                <button class="btn btn-link" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+                  Notes
+                </button>
+              </h5>
+            </div>
+            <div id="collapseTwo" [class.show]="!!(updateNote.note)" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+              <div class="card-body">
+                  <div class="row">
+                    <div class="col">
+                      <form (ngSubmit)="onUpdateNote()">
+                        <div class="form-group">
+                          <textarea *ngIf="auth.getWriteAccess()" [(ngModel)]="updateNote.note" name="carNote"
+                                    class="form-control" id="vehicleNotes" rows="3">{{vehicle.note}}</textarea>
+                          <textarea *ngIf="!auth.getWriteAccess()" [(ngModel)]="updateNote.note" name="carNote"
+                                    readonly class="form-control" id="vehicleNotesRO" rows="3">{{vehicle.note}}</textarea>
+                        </div>
+                        <div class="col-sm-2">
+                          <button *ngIf="auth.getWriteAccess()" class="btn btn-primary btn-block"
+                                  name="Submit" value="Search" type="Submit">Save</button>
+                          <button *ngIf="!auth.getWriteAccess()" class="btn btn-primary btn-block"
+                                  disabled name="SubmitRO" value="Search" type="Submit">Save</button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           </div>
+          <br />
+      </div>
+      <div *ngIf="vehicle.event_list.length > 1">
+        <div class="card">
+          <div class="card-header" id="headingThree">
+            <h5 class="mb-0">
+              <button class="btn btn-link" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                Previous Reads
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseThree" class="collapse show" aria-labelledby="headingTwo" data-parent="#accordion">
+            <div class="card-body">
+
+              Other time this plate has been seen:
+              <div *ngFor="let seenTime of vehicle.event_list; let i=index">
+                <div *ngIf="i > 0">
+                    <div class="row">
+                      <div class="col-4">
+                        <div *ngIf="displayImage.indexOf(i) < 0">
+                          <button type="button" class="btn btn-primary" (click)="addToDisplayList(i)">
+                            <i class="fa fa-camera" aria-hidden="true"></i>
+                          </button>
+                        </div>
+                        <div *ngIf="displayImage.indexOf(i) >= 0">
+                          <a target="_blank" href="http://192.168.1.99:5000/image/{{seenTime.image}}">
+                            <img src="http://192.168.1.99:5000/image/{{seenTime.image}}" class="plate-thumb">
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col-8">
+                        <h6>{{seenTime.date_time | date: 'hh:mm a MM/dd/yy'}}</h6>
+                      </div>
+                    </div>
+                  <br/>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
-    <ng-template #not_first>
-      <div class="row">
-        <div class="col-2">
-          <button type="button" class="btn btn-primary" (click)="addToDisplayList(i)">
-            <i class="fa fa-camera" aria-hidden="true"></i>
-          </button>
-        </div>
-        <div class="col-9">
-          <h6>{{seenTime.date_time | date: 'hh:mm MM/dd/yy'}}</h6>
-        </div>
-      </div>
-    </ng-template>
-    <br>
-  </div>
 </div>
-
-

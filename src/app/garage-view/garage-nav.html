@@ -4,36 +4,82 @@
       <div class="col">
         <h4>Recent Vehicles</h4>
       </div>
+      <div *ngIf="displayCounts" class="col" class="pull-right">
+        <button type="button" class="btn btn-primary" (click)="toggleDisplayCounts()">
+          Hide Vehicle Counts
+        </button>
+      </div>
+      <div *ngIf="!displayCounts" class="col" class="pull-right">
+        <button type="button" class="btn btn-primary" (click)="toggleDisplayCounts()">
+          Show Vehicle Counts
+        </button>
+      </div>
     </div>
-    <main *ngIf="!loading" class="row">
+    <main *ngIf="!loading">
+        <div *ngIf="displayCounts">
+          <hr/>
+          <div class="row">
+            <div class="col">Vehicle Count: Last 24 Hours</div>
+            <div class="col">{{countData['24h']}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col">Vehicle Count: Last 7 Days</div>
+            <div class="col">{{countData['1w']}}</div>
+          </div>
+          <hr/>
+          <div class="row">
+            <div class="col">Vehicle Count: Last 30 Days</div>
+            <div class="col">{{countData['1mo']}}</div>
+          </div>
+          <hr/>
+        </div>
+      <div class = "row">
           <div class="table">
             <table class="table table-striped">
               <thead>
               <tr>
-                <th>Image</th>
-                <th>Plate</th>
-                <th>Time Read</th>
-                <th *ngIf="auth.getWriteAccess()">Remove</th>
+                <th class="row-img" rowspan="2">Image</th>
+                <th class="row-plate">Plate</th>
+                <th class="row-time">Time Read</th>
+                <th class="row-remove">Alert</th>
+                <th class="row-remove" *ngIf="auth.getWriteAccess()">Remove</th>
               </tr>
               </thead>
               <tbody>
                 <tr *ngFor="let vehicle of vehicleList">
                   <td>
-                    <button type="button" class="btn btn-primary" (click)="setDetails(vehicle)">
-                      <i class="fa fa-camera" aria-hidden="true"></i>
+                      <img (click)="setDetails(vehicle)" src="http://192.168.1.99:5000/image/{{vehicle.newest_image}}"
+                           class="plate-thumb">
+                  </td>
+                  <td>
+                    <div class="row" (click)="setDetails(vehicle)">
+                      {{vehicle.plate}}
+                    </div>
+                    <div class="row h-75">
+                      <div class="card h-75 w-100">
+                        <div class="card-block h-75 w-100">
+                           <div [innerHTML]="vehicle.note"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td>{{vehicle.date_time | date: 'hh:mm a MM/dd/yy'}}</td>
+                  <td>
+                    <button *ngIf="vehicle.alerts" type="button" class="btn btn-danger">
+                      <i class="fa fa-bolt" aria-hidden="true"></i>
                     </button>
                   </td>
-                  <td>{{vehicle.plate}}</td>
-                  <td>{{vehicle.date_time | date: 'hh:mm MM/dd/yy'}}</td>
                   <td *ngIf="auth.getWriteAccess()">
-                      <button type="button" class="btn btn-primary" (click)="deleteVehicle(vehicle)">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                      </button>
+                    <button type="button" class="btn btn-primary" (click)="deleteVehicle(vehicle)">
+                      <i class="fa fa-times" aria-hidden="true"></i>
+                    </button>
                   </td>
                 </tr>
               </tbody>
             </table>
           </div>
+      </div>
     </main>
   </div>
   <div *ngIf="details != null">
@@ -43,7 +89,7 @@
           Return To List
         </div>
       </button>
-      <app-vehicle-details [vehicle_id]="details"></app-vehicle-details>
+      <app-vehicle-details [vehicle_id]="details" (onCloseDetails)="setDetails(null)"></app-vehicle-details>
     </div>
   </div>
 </div>

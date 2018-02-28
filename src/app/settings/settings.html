@@ -3,28 +3,36 @@
 <div class="row">
   <div class="col-2">
     <ul class="nav flex-column nav-pills">
-      <li class="nav-item">
+      <li class="nav-item" (click)="onTabSelect('changePassword')">
         <div *ngIf="changePasswordSelected == true">
           <div class="nav-link active">Change Password</div>
         </div>
         <div *ngIf="changePasswordSelected == false">
-          <a class="nav-link" (click)="onTabSelect('changePassword')">Change Password</a>
+          <a class="nav-link">Change Password</a>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" (click)="onTabSelect('newUser')">
         <div *ngIf="auth.getAdminAccess() && newUserCreateSelected == true">
           <div class="nav-link active">Create New User</div>
         </div>
         <div *ngIf="auth.getAdminAccess() && newUserCreateSelected == false">
-          <a class="nav-link" (click)="onTabSelect('newUser')">Create New User</a>
+          <a class="nav-link">Create New User</a>
         </div>
       </li>
-      <li class="nav-item">
+      <li class="nav-item" (click)="onTabSelect('systemSettings')">
         <div *ngIf="auth.getAdminAccess() && editUserSelected == true">
           <div class="nav-link active">Edit User</div>
         </div>
         <div *ngIf="auth.getAdminAccess() && editUserSelected == false">
-          <a class="nav-link" (click)="onTabSelect('systemSettings')">Edit User</a>
+          <a class="nav-link">Edit User</a>
+        </div>
+      </li>
+      <li class="nav-item" (click)="onTabSelect('editCameras')">
+        <div *ngIf="auth.getAdminAccess() && editCamerasSelected == true">
+          <div class="nav-link active">Edit Cameras</div>
+        </div>
+        <div *ngIf="auth.getAdminAccess() && editCamerasSelected == false">
+          <a class="nav-link">Edit Cameras</a>
         </div>
       </li>
     </ul>
@@ -39,7 +47,10 @@
       <app-settings-new-user></app-settings-new-user>
     </div>
     <div *ngIf="auth.getAdminAccess() && editUserSelected == true">
-      <app-settings-edit-user></app-settings-edit-user>
+      <app-settings-edit-user #editUserChild></app-settings-edit-user>
+    </div>
+    <div *ngIf="auth.getAdminAccess() && editCamerasSelected == true">
+      <app-settings-camera-config #camChild></app-settings-camera-config>
     </div>
   </div>
 </div>

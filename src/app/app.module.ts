@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthGuard } from './auth_guard';
 import { HttpService } from './HttpService';
 import { SettingsModule } from './settings/settings.module';
+import { VehicleAlertsModule } from "./alerts/vehicle-alerts.module";
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { SettingsModule } from './settings/settings.module';
     LoginModule,
     FormsModule,
     SettingsModule,
-    routing
+    routing,
+    VehicleAlertsModule
   ],
   providers: [AuthService, AuthGuard, HttpService],
   bootstrap: [AppComponent]

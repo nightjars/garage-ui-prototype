@@ -8,6 +8,9 @@ import { SettingsComponent } from './settings.component';
 import { PasswordChangeComponent } from './password-change.component';
 import { NewUserComponent } from './new-user.component';
 import { EditUserComponent } from './edit-user.component';
+import { CameraConfigComponent } from "./camera-config.component";
+import {CameraDetectionAreaConfig} from "./camera-detection-area-config";
+import { LiveCameraComponent } from "./live-camera.component";
 
 @NgModule({
   imports: [
@@ -20,7 +23,10 @@ import { EditUserComponent } from './edit-user.component';
     SettingsComponent,
     PasswordChangeComponent,
     NewUserComponent,
-    EditUserComponent
+    EditUserComponent,
+    CameraConfigComponent,
+    CameraDetectionAreaConfig,
+    LiveCameraComponent
   ],
   exports: [],
   providers: []

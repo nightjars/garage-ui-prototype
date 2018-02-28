@@ -11,6 +11,7 @@ import { VehicleDetailsComponent } from "./vehicle-details.component"
   selector: 'app-garage-nav',
   providers: [GarageService],
   templateUrl: 'garage-nav.html',
+  styleUrls: ['./vehicle-details.css']
 })
 export class GarageNavComponent implements OnInit, OnDestroy {
   garageService;
@@ -18,16 +19,17 @@ export class GarageNavComponent implements OnInit, OnDestroy {
   details;
   loading = true;
   auto_poll = new Subscription();
+  displayCounts = false;
+  countData = null;
 
   constructor(garageService: GarageService, public auth: AuthService, private router: Router) {
     this.garageService = garageService;
     this.details = null;
     this.fetchData();
-    this.auto_poll = Observable.timer(2000)
-      .subscribe(() => this.fetchData());
   }
   public ngOnInit() {
     this.refresh_subscribe();
+    this.fetchData();
   }
   public ngOnDestroy(): void {
     this.auto_poll.unsubscribe();
@@ -38,6 +40,9 @@ export class GarageNavComponent implements OnInit, OnDestroy {
       this.fetchData();
     });
   }
+  public toggleDisplayCounts(): void {
+    this.displayCounts = !this.displayCounts;
+  }
   private fetchData() {
     this.garageService.getVehicleList()
       .subscribe(data => {
@@ -45,6 +50,7 @@ export class GarageNavComponent implements OnInit, OnDestroy {
         if (data != null) {
           this.loading = false;
           this.vehicleList = data.vehicles;
+          this.countData = data.counts;
         } else {
           console.log('No data returned, check auth.');
           if (!this.auth.isLoggedIn()) {
@@ -57,9 +63,12 @@ export class GarageNavComponent implements OnInit, OnDestroy {
   public setDetails(vehicle) {
     if (vehicle != null) {
       this.details = vehicle.id;
+      this.auto_poll.unsubscribe();
     } else {
       this.details = null;
+      this.ngOnInit();
     }
+    this.fetchData();
   }
   public deleteVehicle(vehicle) {
     this.garageService.deleteCar(vehicle)

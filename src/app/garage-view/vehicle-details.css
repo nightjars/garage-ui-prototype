@@ -1,1 +1,23 @@
 #plate-img { max-width: 100%; height: auto}
+.plate-thumb { max-width: 80%; height: auto}
+.small-plate-thumb {max-width: 20%; height: auto}
+
+.row-img {
+  width: 30%;
+}
+.row-plate {
+  width: 30%;
+}
+.row-time {
+  width: 30%;
+}
+.row-remove{
+  width: 10%;
+}
+.row-live-img{
+  width: 70%;
+}
+.row-cam-name{
+  width: 25%;
+}
+
