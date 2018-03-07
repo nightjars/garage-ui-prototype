@@ -19,6 +19,7 @@ export class GarageSearchComponent {
   start_date_picker: any = null;
   end_date_picker: any = null;
   details = null;
+  event_details = null;
   constructor(private garageService: GarageService, private auth: AuthService,
               private router: Router) {
   }
@@ -40,12 +41,14 @@ export class GarageSearchComponent {
       });
   }
   public setDetails(vehicle) {
-    console.log(vehicle);
-    if (vehicle != null) {
-      this.details = vehicle.id;
-    } else {
-      this.details = null;
-    }
+    this.details = vehicle;
+  }
+  public setEventDetails(event) {
+    this.event_details = event;
+  }
+  public resetAllDetails() {
+    this.setDetails(null);
+    this.setEventDetails(null);
   }
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'mm.dd.yyyy',

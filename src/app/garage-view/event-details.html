@@ -1,0 +1,21 @@
+<div *ngIf="loading == false">
+  <div class="row">
+    <div class="col-9">
+      <canvas #carImgCanvas>
+        <a target="_blank" href="http://192.168.1.99:5000/image/{{event.image}}">
+          <img #carImg src="http://192.168.1.99:5000/image/{{event.image}}" id="plate-img" (load)="drawRect()">
+        </a>
+      </canvas>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">Event Time</div>
+    <div class="col">{{event.date_time | date: 'hh:mm a MM/dd/yy'}}</div>
+  </div>
+  <div class="row">
+    <div class="col">Plate Read Confidence</div>
+    <div class="col">{{event.confidence}}%</div>
+  </div>
+
+    {{event.camera_id}}
+</div>

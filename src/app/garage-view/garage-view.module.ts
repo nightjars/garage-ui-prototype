@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { MyDatePickerModule } from 'angular4-datepicker/src/my-date-picker/my-date-picker.module';
 import {IMyDpOptions, IMyDateModel} from 'angular4-datepicker/src/my-date-picker/interfaces';
 import {VehicleAlertsModule} from "../alerts/vehicle-alerts.module";
+import {EventDetailsComponent} from "./event-details.component";
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {VehicleAlertsModule} from "../alerts/vehicle-alerts.module";
     GarageNavComponent,
     VehicleDetailsComponent,
     GarageNavFilterPipe,
-    GarageSearchComponent
+    GarageSearchComponent,
+    EventDetailsComponent
   ],
   exports: [],
   providers: []

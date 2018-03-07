@@ -12,14 +12,16 @@ import {VehicleAlert} from "./models/VehicleAlert";
 
 @Injectable()
 export class GarageService {
-  private vehicleListUrl = 'http://192.168.1.99:5000/api/vehicle/recent';
-  private deleteUrl = 'http://192.168.1.99:5000/api/vehicle/delete';
-  private getDetailsUrl = 'http://192.168.1.99:5000/api/vehicle/details';
-  private getSearchUrl = 'http://192.168.1.99:5000/api/vehicle/search';
-  private updateNoteUrl = 'http://192.168.1.99:5000/api/vehicle/set_note';
-  private getAlertsUrl = 'http://192.168.1.99:5000/api/vehicle/alert/get';
-  private createAlertUrl = 'http://192.168.1.99:5000/api/vehicle/alert/create';
-  private deleteAlertUrl = 'http://192.168.1.99:5000/api/vehicle/alert/delete';
+  private host = 'http://192.168.1.99:5000';
+  private vehicleListUrl = this.host + '/api/vehicle/recent';
+  private deleteUrl = this.host + '/api/vehicle/delete';
+  private getDetailsUrl = this.host + '/api/vehicle/details';
+  private getSearchUrl = this.host + '/api/vehicle/search';
+  private updateNoteUrl = this.host + '/api/vehicle/set_note';
+  private getAlertsUrl = this.host + '/api/vehicle/alert/get';
+  private createAlertUrl = this.host + '/api/vehicle/alert/create';
+  private deleteAlertUrl = this.host + '/api/vehicle/alert/delete';
+  private eventGetUrl = this.host + '/api/vehicle/get_event/';
   constructor(private _http: HttpService) {
   }
   getVehicleList() {
@@ -76,6 +78,12 @@ export class GarageService {
   }
   deleteAlert(alert: VehicleAlert) {
     return this._http.post(this.deleteAlertUrl, alert)
+      .catch(error => {
+        return Observable.of(null);
+      });
+  }
+  getEvent(event) {
+    return this._http.get(this.eventGetUrl + event.id)
       .catch(error => {
         return Observable.of(null);
       });

@@ -58,7 +58,7 @@
   </div>
 </form>
 <div *ngIf="searchResults != null">
-  <div *ngIf="details == null">
+  <div *ngIf="details == null && event_details == null">
     <br/>
     <div class="row">
       <div class="col">
@@ -74,6 +74,7 @@
             <th class="row-plate">Plate</th>
             <th class="row-time">Time Read</th>
             <th class="row-time">Alert</th>
+            <th class="row-time">Event</th>
           </tr>
           </thead>
           <tbody>
@@ -101,21 +102,31 @@
                 <i class="fa fa-bolt" aria-hidden="true"></i>
               </button>
             </td>
+            <td>
+              <button (click)="setEventDetails(vehicle)">
+                <i class="fa fa-info" aria-hidden="true"></i>
+              </button>
+            </td>
           </tr>
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  <div *ngIf="details != null">
+  <div *ngIf="details != null || event_details != null">
     <br/>
     <div class="container">
-      <button type="button" class="btn btn-primary" (click)="setDetails(null)">
+      <button type="button" class="btn btn-primary" (click)="resetAllDetails()">
         <div class="fa fa-arrow-circle-left" aria-hidden="true">
           Return To Search Results
         </div>
       </button>
-      <app-vehicle-details [vehicle_id]="details" (onCloseDetails)="setDetails(null)"></app-vehicle-details>
+      <div *ngIf="details != null">
+        <app-vehicle-details [vehicle_id]="details" (onCloseDetails)="setDetails(null)"></app-vehicle-details>
+      </div>
+      <div *ngIf="event_details != null">
+        <app-event-details [event_id]="event_details" (onClose)="setEventDetails(null)"></app-event-details>
+      </div>
     </div>
   </div>
 </div>
