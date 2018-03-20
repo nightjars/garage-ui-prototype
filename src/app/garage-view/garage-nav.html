@@ -1,8 +1,11 @@
-<div class="container">
+<div class="container-fluid">
   <div *ngIf="details == null">
     <div class="row">
       <div class="col">
         <h4>Recent Vehicles</h4>
+      </div>
+      <div class="pull-right" *ngIf="auth.getWriteAccess()">
+        <button type="button" class="btn btn-primary" (click)="clearAll()">Clear All</button>
       </div>
       <div *ngIf="displayCounts" class="col" class="pull-right">
         <button type="button" class="btn btn-primary" (click)="toggleDisplayCounts()">
@@ -49,7 +52,7 @@
               <tbody>
                 <tr *ngFor="let vehicle of vehicleList">
                   <td>
-                      <img (click)="setDetails(vehicle)" src="http://192.168.1.99:5000/image/{{vehicle.newest_image}}"
+                      <img (click)="setDetails(vehicle)" src="http://garageapiserv:5000/image/{{vehicle.newest_image}}"
                            class="plate-thumb">
                   </td>
                   <td>
@@ -83,7 +86,7 @@
     </main>
   </div>
   <div *ngIf="details != null">
-    <div class="container">
+    <div class="container-fluid">
       <button type="button" class="btn btn-primary" (click)="setDetails(null)">
         <div class="fa fa-arrow-circle-left" aria-hidden="true">
           Return To List

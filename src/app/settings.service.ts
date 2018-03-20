@@ -9,15 +9,16 @@ import { SearchForm } from './models/SearchForm';
 
 @Injectable()
 export class SettingsService {
-  private passwordChangeUrl = 'http://192.168.1.99:5000/api/user/change_password';
-  private getUserListUrl = 'http://192.168.1.99:5000/api/user/users';
-  private modifyUserUrl = 'http://192.168.1.99:5000/api/user/modify_user';
-  private deleteUserUrl = 'http://192.168.1.99:5000/api/user/delete_user';
-  private createUserUrl = 'http://192.168.1.99:5000/api/user/create_user';
-  private getCamerasUrl = 'http://192.168.1.99:5000/api/camera/get';
-  private saveCameraUrl = 'http://192.168.1.99:5000/api/camera/save';
-  private setDetectionAreaUrl = 'http://192.168.1.99:5000/api/camera/set_detection_area';
-  private cameraImage = 'http://192.168.1.99:5000/api/camera/get/image_json/';
+  private host = 'http://garageapiserv:5000';
+  private passwordChangeUrl = this.host + '/api/user/change_password';
+  private getUserListUrl = this.host + '/api/user/users';
+  private modifyUserUrl = this.host + '/api/user/modify_user';
+  private deleteUserUrl = this.host + '/api/user/delete_user';
+  private createUserUrl = this.host + '/api/user/create_user';
+  private getCamerasUrl = this.host + '/api/camera/get';
+  private saveCameraUrl = this.host + '/api/camera/save';
+  private setDetectionAreaUrl = this.host + '/api/camera/set_detection_area';
+  private cameraImage = this.host + '/api/camera/get/image_json/';
 
   constructor(private _http: HttpService) {
   }

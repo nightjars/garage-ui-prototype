@@ -1,21 +1,42 @@
 <div *ngIf="loading == false">
   <div class="row">
-    <div class="col-9">
-      <canvas #carImgCanvas>
-        <a target="_blank" href="http://192.168.1.99:5000/image/{{event.image}}">
-          <img #carImg src="http://192.168.1.99:5000/image/{{event.image}}" id="plate-img" (load)="drawRect()">
-        </a>
-      </canvas>
+    <div class="col">
+      <app-event-photo-process [event_id]="event.id"></app-event-photo-process>
     </div>
   </div>
-  <div class="row">
-    <div class="col">Event Time</div>
-    <div class="col">{{event.date_time | date: 'hh:mm a MM/dd/yy'}}</div>
+  <div class="card">
+    <form (ngSubmit)="onChangePlate()">
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-3">
+              <label for="eventPlate">Change Plate</label>
+          </div>
+          <div class="col">
+              <input type="text" *ngIf="auth.getWriteAccess()" [(ngModel)]="changePlate" name="eventPlate"
+                     class="form-control" id="eventPlate">
+              <input type="text" *ngIf="!auth.getWriteAccess()" [(ngModel)]="changePlate" name="eventPlate"
+                        readonly class="form-control" id="eventPlate">
+          </div>
+          <div class="col-sm-2">
+            <button *ngIf="auth.getWriteAccess()" class="btn btn-primary btn-block"
+                    name="Submit" value="Search" type="Submit">Update</button>
+            <button *ngIf="!auth.getWriteAccess()" class="btn btn-primary btn-block"
+                    disabled name="SubmitRO" value="Search" type="Submit">Update</button>
+          </div>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="row">
-    <div class="col">Plate Read Confidence</div>
-    <div class="col">{{event.confidence}}%</div>
+  <div class="card">
+    <h5>
+      <div class="row">
+        <div class="col">Event Time</div>
+        <div class="col">{{event.date_time | date: 'hh:mm a MM/dd/yy'}}</div>
+      </div>
+      <div class="row">
+          <div class="col">Plate Read Confidence</div>
+          <div class="col">{{event.confidence}}%</div>
+      </div>
+    </h5>
   </div>
-
-    {{event.camera_id}}
 </div>

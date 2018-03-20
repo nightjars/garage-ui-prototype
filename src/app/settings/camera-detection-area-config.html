@@ -1,11 +1,9 @@
-<!DOCTYPE html>
 <h2>Detection Zone Setup</h2>
-<h5>Currently this interface is very crude.  It will be improved later.  Click on the upper left of the zone
-you would like detection to occur in, then the lower right.  The coordinates will be used to define a rectangle
-which will be used for detection.  Currently no status is shown during clicking, but after two coordinates are
-clicked, you will see the coordinates used and be given the option to accept.</h5>
-<div *ngIf="!doneSet">
-  <img (click)="onImageClick($event)" src="http://192.168.1.99:5000/api/camera/get/image/{{camera.id}}" width="600px">
+<div *ngIf="!doneSet" #imgParentDiv width="100%">
+  <canvas #imgCanvas (click)="onImageClick($event)">
+    <img #camImg src="http://garageapiserv:5000/api/camera/get/image/{{camera.id}}"
+       (load)="initImg()">
+  </canvas>
 </div>
 <div *ngIf="doneSet">
   Rectangle: {{x1}},{{y1}} to {{x2}},{{y2}}

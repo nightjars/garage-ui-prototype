@@ -29,7 +29,7 @@ export class LiveCameraComponent implements OnInit, OnDestroy {
     this.auto_poll.unsubscribe();
   }
   public refresh_subscribe():void {
-    let timer = Observable.interval(400);
+    let timer = Observable.interval(1500);
     this.auto_poll = timer.subscribe( t => {
       this.fetchData();
     });

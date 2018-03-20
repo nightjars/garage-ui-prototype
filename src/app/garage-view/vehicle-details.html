@@ -1,20 +1,20 @@
-<div *ngIf="!loading" class="container">
+<div *ngIf="!loading" class="container-fluid">
   <div class="row">
-    <div class="col-9">
+    <div class="col-5">
       <h2>
         Vehicle Information For {{vehicle.plate}}
       </h2>
     </div>
+    <div class="col text-right">
+      <h5>Time of image: </h5>
+      <h6>{{vehicle.event_list[0].date_time | date: 'hh:mm a MM/dd/yy'}}</h6>
+    </div>
   </div>
       <div class="row">
-        <div class="col-9">
-          <a target="_blank" href="http://192.168.1.99:5000/image/{{vehicle.event_list[0].image}}">
-            <img src="http://192.168.1.99:5000/image/{{vehicle.event_list[0].image}}" id="plate-img">
+        <div class="col">
+          <a target="_blank" href="http://garageapiserv:5000/image/{{vehicle.event_list[0].image}}">
+            <app-event-photo-process [event_id]="vehicle.event_list[0].id"></app-event-photo-process>
           </a>
-        </div>
-        <div class="col-3">
-          <h5>Time of image: </h5>
-          <h6>{{vehicle.event_list[0].date_time | date: 'hh:mm a MM/dd/yy'}}</h6>
         </div>
       </div>
       <br/>
@@ -98,8 +98,8 @@
                           </button>
                         </div>
                         <div *ngIf="displayImage.indexOf(i) >= 0">
-                          <a target="_blank" href="http://192.168.1.99:5000/image/{{seenTime.image}}">
-                            <img src="http://192.168.1.99:5000/image/{{seenTime.image}}" class="plate-thumb">
+                          <a target="_blank" href="http://garageapiserv:5000/image/{{seenTime.image}}">
+                            <img src="http://garageapiserv:5000/image/{{seenTime.image}}" class="plate-thumb">
                           </a>
                         </div>
                       </div>

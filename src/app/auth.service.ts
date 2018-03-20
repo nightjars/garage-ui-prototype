@@ -7,9 +7,10 @@ import 'rxjs/add/observable/of';
 
 @Injectable()
 export class AuthService {
+  private host = 'http://garageapiserv:5000';
   public token: string;
-  private BASE_URL: string = 'http://192.168.1.99:5000/auth';
-  private permissions_url: string = 'http://192.168.1.99:5000/api/user/user_permissions';
+  private BASE_URL: string = this.host + '/auth';
+  private permissions_url: string = this.host + '/api/user/user_permissions';
   private headers: Headers = new Headers({'Content-Type': 'application/json'});
   constructor(private http: Http) {
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));

@@ -76,4 +76,10 @@ export class GarageNavComponent implements OnInit, OnDestroy {
         this.fetchData();
       });
   }
+  public clearAll() {
+    for (let vehicle of this.vehicleList) {
+      this.garageService.deleteCar(vehicle)
+        .subscribe(data => {this.fetchData();});
+    }
+  }
 }

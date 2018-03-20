@@ -12,7 +12,7 @@ import {VehicleAlert} from "./models/VehicleAlert";
 
 @Injectable()
 export class GarageService {
-  private host = 'http://192.168.1.99:5000';
+  private host = 'http://garageapiserv:5000';
   private vehicleListUrl = this.host + '/api/vehicle/recent';
   private deleteUrl = this.host + '/api/vehicle/delete';
   private getDetailsUrl = this.host + '/api/vehicle/details';
@@ -22,6 +22,7 @@ export class GarageService {
   private createAlertUrl = this.host + '/api/vehicle/alert/create';
   private deleteAlertUrl = this.host + '/api/vehicle/alert/delete';
   private eventGetUrl = this.host + '/api/vehicle/get_event/';
+  private correctPlateUrl = this.host + '/api/vehicle/correct_plate';
   constructor(private _http: HttpService) {
   }
   getVehicleList() {
@@ -82,8 +83,21 @@ export class GarageService {
         return Observable.of(null);
       });
   }
-  getEvent(event) {
-    return this._http.get(this.eventGetUrl + event.id)
+  getEvent(event = null, event_id = null) {
+    var id = null;
+    if (event == null || event_id != null) {
+      id = event_id;
+    } else  {
+      id = event.id;
+    }
+    return this._http.get(this.eventGetUrl + id)
+      .catch(error => {
+        return Observable.of(null);
+      });
+  }
+  changePlate(eventId, newPlate) {
+    var plateChange = {'id': eventId, 'plate': newPlate};
+    return this._http.post(this.correctPlateUrl, plateChange)
       .catch(error => {
         return Observable.of(null);
       });

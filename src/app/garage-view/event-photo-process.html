@@ -1,0 +1,7 @@
+<div #parentDiv>
+  <canvas #carImgCanvas>
+    <a target="_blank" href="http://garageapiserv:5000/image/{{event.image}}">
+      <img #carImg src="http://garageapiserv:5000/image/{{event.image}}" id="plate-img" (load)="drawRect()">
+    </a>
+  </canvas>
+</div>

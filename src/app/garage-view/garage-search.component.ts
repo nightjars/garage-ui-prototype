@@ -20,6 +20,7 @@ export class GarageSearchComponent {
   end_date_picker: any = null;
   details = null;
   event_details = null;
+  customSearch = true;
   constructor(private garageService: GarageService, private auth: AuthService,
               private router: Router) {
   }
@@ -40,6 +41,17 @@ export class GarageSearchComponent {
         }
       });
   }
+  public daySearch(days) {
+    this.customSearch = false;
+    this.searchResults = null;
+    var daySearchModel = new SearchForm();
+    var now = new Date();
+    daySearchModel.include_thumbnails = true;
+    now.setDate(now.getDate() - days);
+    daySearchModel.start_date = now.toISOString();
+    this.searchModel = daySearchModel;
+    this.onSearch();
+  }
   public setDetails(vehicle) {
     this.details = vehicle;
   }
@@ -49,8 +61,16 @@ export class GarageSearchComponent {
   public resetAllDetails() {
     this.setDetails(null);
     this.setEventDetails(null);
+    this.onSearch();
   }
   public myDatePickerOptions: IMyDpOptions = {
     dateFormat: 'mm.dd.yyyy',
   };
+  public customSearchButton() {
+    if (!this.customSearch) {
+      this.searchModel = new SearchForm();
+      this.searchResults = null;
+    }
+    this.customSearch = true;
+  }
 }

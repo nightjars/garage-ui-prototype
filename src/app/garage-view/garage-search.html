@@ -1,62 +1,64 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<div class="container">
-<form (ngSubmit)="onSearch()" novalidate class="form-signin">
-  <h4>Vehicle Search</h4>
-  <div class="row">
-    <div class="col-sm-4">
-      Start Date
+<div class="container-fluid">
+  <div *ngIf="details == null && event_details == null">
+    <div class="card">
+      <div class="row">
+        <button class="btn btn-primary" (click)="customSearchButton()">Custom</button>
+        <button class="btn btn-primary" (click)="daySearch(1)">Today</button>
+        <button class="btn btn-primary" (click)="daySearch(7)">This Week</button>
+      </div>
     </div>
-    <div class="col-sm-4">
-      <my-date-picker name="StartDate" [options]="myDatePickerOptions"
-                      [(ngModel)]="start_date_picker" ></my-date-picker>
+    <form *ngIf="customSearch" (ngSubmit)="onSearch()" novalidate class="form-signin">
+      <h4>Vehicle Search</h4>
+      <div class="row">
+        <div class="col-sm-4">
+          Start Date
+        </div>
+        <div class="col-sm-4">
+          <my-date-picker name="StartDate" [options]="myDatePickerOptions"
+                          [(ngModel)]="start_date_picker" ></my-date-picker>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          End Date
+        </div>
+        <div class="col-sm-4">
+          <my-date-picker name="EndDate" [options]="myDatePickerOptions"
+                          [(ngModel)]="end_date_picker" ></my-date-picker>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-4">
+          Plate (Partial or Full)
+        </div>
+        <div class="col-sm-4">
+          <input type="text" class="form-control" [(ngModel)]="searchModel.plate_substring"
+                 name="PlateSubstring"/>
+        </div>
+      </div><div class="row">
+      <div class="col-sm-4">
+        Note
+      </div>
+      <div class="col-sm-4">
+        <input type="text" class="form-control" [(ngModel)]="searchModel.note"
+               name="PlateSubstring"/>
+      </div>
     </div>
+      <div class="row">
+        <div class="col-sm-4">
+          Display Thumbnail Images on Search Results
+        </div>
+        <div class="col-sm-4">
+          <input type="checkbox" [(ngModel)]="searchModel.include_thumbnails" name="AdminAccess"/>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2">
+          <button class="btn btn-primary btn-block"  name="Submit" value="Search" type="Submit">Search</button>
+        </div>
+      </div>
+    </form>
   </div>
-  <div class="row">
-    <div class="col-sm-4">
-      End Date
-    </div>
-    <div class="col-sm-4">
-      <my-date-picker name="EndDate" [options]="myDatePickerOptions"
-                      [(ngModel)]="end_date_picker" ></my-date-picker>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-4">
-      Plate (Partial or Full)
-    </div>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" [(ngModel)]="searchModel.plate_substring"
-             name="PlateSubstring"/>
-    </div>
-  </div><div class="row">
-  <div class="col-sm-4">
-    Note
-  </div>
-  <div class="col-sm-4">
-    <input type="text" class="form-control" [(ngModel)]="searchModel.note"
-           name="PlateSubstring"/>
-  </div>
-</div>
-  <div class="row">
-    <div class="col-sm-4">
-      Display Thumbnail Images on Search Results
-    </div>
-    <div class="col-sm-4">
-      <input type="checkbox" [(ngModel)]="searchModel.include_thumbnails" name="AdminAccess"/>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-2">
-      <button class="btn btn-primary btn-block"  name="Submit" value="Search" type="Submit">Search</button>
-    </div>
-  </div>
-</form>
 <div *ngIf="searchResults != null">
   <div *ngIf="details == null && event_details == null">
     <br/>
@@ -81,7 +83,7 @@
           <tr *ngFor="let vehicle of searchResults">
             <td>
               <div *ngIf="vehicle.image!=null" (click)="setDetails(vehicle)">
-                <img src="http://192.168.1.99:5000/image/{{vehicle.image}}" class="plate-thumb">
+                <img src="http://garageapiserv:5000/image/{{vehicle.image}}" class="plate-thumb">
               </div>
             </td>
             <td>
@@ -115,21 +117,19 @@
   </div>
   <div *ngIf="details != null || event_details != null">
     <br/>
-    <div class="container">
+    <div class="container-fluid">
       <button type="button" class="btn btn-primary" (click)="resetAllDetails()">
         <div class="fa fa-arrow-circle-left" aria-hidden="true">
           Return To Search Results
         </div>
       </button>
       <div *ngIf="details != null">
-        <app-vehicle-details [vehicle_id]="details" (onCloseDetails)="setDetails(null)"></app-vehicle-details>
+        <app-vehicle-details [vehicle_id]="details.id" (onCloseDetails)="resetAllDetails()"></app-vehicle-details>
       </div>
       <div *ngIf="event_details != null">
-        <app-event-details [event_id]="event_details" (onClose)="setEventDetails(null)"></app-event-details>
+        <app-event-details [event_id]="event_details.id" (onClose)="resetAllDetails()"></app-event-details>
       </div>
     </div>
   </div>
 </div>
 </div>
-</body>
-</html>

@@ -13,7 +13,7 @@
         <tr *ngFor="let camera of cameraList">
           <td>
             <div *ngIf="camera.run_status!=null">
-              <a target="_blank" href="http://192.168.1.99:5000/api/camera/get/image/{{camera.id}}">
+              <a target="_blank" href="http://garageapiserv:5000/api/camera/get/image/{{camera.id}}">
                 <app-live-camera [camera_id]="camera.id"></app-live-camera>
               </a>
             </div>
@@ -48,9 +48,9 @@
       </table>
     </div>
   </div>
-  <div *ngIf="selectedCamera != null" class="col-sm-6">
+  <div *ngIf="selectedCamera != null" class="col">
     <button (click)="onDetectionAreaConfig()">Setup Camera Detection Area</button>
-    <a target="_blank" href="http://192.168.1.99:5000/api/camera/get/motion_image/{{selectedCamera.id}}">
+    <a target="_blank" href="http://garageapiserv:5000/api/camera/get/motion_image/{{selectedCamera.id}}">
       <button>View Current Detection Area</button>
     </a>
     <div *ngIf="detectionAreaConfig">

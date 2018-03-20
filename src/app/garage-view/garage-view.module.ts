@@ -12,6 +12,7 @@ import { MyDatePickerModule } from 'angular4-datepicker/src/my-date-picker/my-da
 import {IMyDpOptions, IMyDateModel} from 'angular4-datepicker/src/my-date-picker/interfaces';
 import {VehicleAlertsModule} from "../alerts/vehicle-alerts.module";
 import {EventDetailsComponent} from "./event-details.component";
+import {EventPhotoProcessComponent} from "./event-photo-process.component";
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import {EventDetailsComponent} from "./event-details.component";
     VehicleDetailsComponent,
     GarageNavFilterPipe,
     GarageSearchComponent,
-    EventDetailsComponent
+    EventDetailsComponent,
+    EventPhotoProcessComponent
   ],
   exports: [],
   providers: []
