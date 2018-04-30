@@ -80,7 +80,7 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let vehicle of searchResults">
+          <tr *ngFor="let vehicle of searchResults.slice(0, displayNumber)">
             <td>
               <div *ngIf="vehicle.image!=null" (click)="setDetails(vehicle)">
                 <img src="http://garageapiserv:5000/image/{{vehicle.image}}" class="plate-thumb">

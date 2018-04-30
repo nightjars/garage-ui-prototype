@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import { GarageService } from '../garage.service';
 import { GarageNavFilterPipe } from './garage-nav-filter.pipe';
 import { AuthService } from '../auth.service';
@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs/Rx";
 import { Subscription } from "rxjs/Subscription";
 import { VehicleDetailsComponent } from "./vehicle-details.component"
+import {current} from "codelyzer/util/syntaxKind";
 
 @Component({
   selector: 'app-garage-nav',
@@ -21,6 +22,7 @@ export class GarageNavComponent implements OnInit, OnDestroy {
   auto_poll = new Subscription();
   displayCounts = false;
   countData = null;
+  displayNumber = 10;
 
   constructor(garageService: GarageService, public auth: AuthService, private router: Router) {
     this.garageService = garageService;
@@ -80,6 +82,12 @@ export class GarageNavComponent implements OnInit, OnDestroy {
     for (let vehicle of this.vehicleList) {
       this.garageService.deleteCar(vehicle)
         .subscribe(data => {this.fetchData();});
+    }
+  }
+  @HostListener('window:scroll', []) onScroll() {
+    var currentPosition = window.pageYOffset + window.innerHeight;
+    if (currentPosition >= document.body.scrollHeight) {
+      this.displayNumber += 5;
     }
   }
 }

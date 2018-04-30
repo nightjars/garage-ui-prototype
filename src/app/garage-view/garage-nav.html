@@ -50,7 +50,7 @@
               </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let vehicle of vehicleList">
+                <tr *ngFor="let vehicle of vehicleList.slice(0, displayNumber)">
                   <td>
                       <img (click)="setDetails(vehicle)" src="http://garageapiserv:5000/image/{{vehicle.newest_image}}"
                            class="plate-thumb">

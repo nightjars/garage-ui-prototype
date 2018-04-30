@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, HostListener, Input, OnInit} from '@angular/core';
 import { GarageService } from '../garage.service';
 import { FormsModule } from '@angular/forms';
 import {SearchForm} from '../models/SearchForm';
@@ -21,6 +21,7 @@ export class GarageSearchComponent {
   details = null;
   event_details = null;
   customSearch = true;
+  displayNumber = 10;
   constructor(private garageService: GarageService, private auth: AuthService,
               private router: Router) {
   }
@@ -72,5 +73,11 @@ export class GarageSearchComponent {
       this.searchResults = null;
     }
     this.customSearch = true;
+  }
+  @HostListener('window:scroll', []) onScroll() {
+    var currentPosition = window.pageYOffset + window.innerHeight;
+    if (currentPosition >= document.body.scrollHeight) {
+      this.displayNumber += 5;
+    }
   }
 }
